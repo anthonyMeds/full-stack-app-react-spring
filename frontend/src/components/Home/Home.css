@@ -1,0 +1,87 @@
+/* Estilo Básico */
+body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #343a40;
+    background-color: #f8f9fa;
+  }
+  
+  h1, h2 {
+    font-weight: bold;
+  }
+  
+  
+  /* Principal */
+  .sobre {
+    
+    color: black;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .sobre h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .sobre p {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .sobre button {
+    font-size: 1.2rem;
+    padding: 0.8rem 1.5rem;
+  }
+  
+  /* Funcionalidades */
+  .features {
+    padding: 4rem 0;
+  }
+  
+  .features h2 {
+    margin-bottom: 2rem;
+  }
+  
+  .features .icon {
+    font-size: 2.5rem;
+    color: #007bff;
+    margin-bottom: 1rem;
+  }
+  
+  /* Seção Sobre */
+  .about {
+    padding: 4rem 0;
+  }
+  
+  .about img {
+    margin-top: 2rem;
+    max-width: 80%;
+    height: auto;
+  }
+  
+  /* Rodapé */
+  .footer {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .hero h1 {
+      font-size: 2rem;
+    }
+  
+    .hero p {
+      font-size: 1rem;
+    }
+  
+    .features .icon {
+      font-size: 2rem;
+    }
+  }
+  

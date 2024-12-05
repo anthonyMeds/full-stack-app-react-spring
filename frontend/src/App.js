@@ -1,8 +1,8 @@
 
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-import './App.css';
-import  Users  from './components/Users';
-import { Home } from './components/Home';
+
+import  Users  from './components/User/Users';
+import { Home } from './components/Home/Home';
 
 import { Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -10,12 +10,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   return (
     <div className="App">
-      <h1>Sistema de gerenciamento de usuários </h1>
+      <h1>Sistema de Gerenciamento de Usuários </h1>
       <BrowserRouter>
 
         <Nav variant="tabs">
           <Nav.Link as={Link} to="/">Pagina inicial</Nav.Link>
-          <Nav.Link as={Link} to="/alunos">Gerenciar usuários</Nav.Link>
+          <Nav.Link as={Link} to="/users">Gerenciar usuários</Nav.Link>
 
         </Nav>
 
