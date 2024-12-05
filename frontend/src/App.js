@@ -1,23 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { Home } from "./components/Home/Home";
+import Users from "./components/User/Users";
+
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Nav, Navbar } from "react-bootstrap";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        {/* Barra de navegação */}
+        <Navbar bg="dark" variant="dark" expand="lg">
+          <Container>
+            <Navbar.Brand as={Link} to="/">
+              Sistema de Gerenciamento de Usuários
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <Nav.Link as={Link} to="/">
+                  Página Inicial
+                </Nav.Link>
+                <Nav.Link as={Link} to="/users">
+                  Gerenciar Usuários
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+
+        {/* Rotas */}
+        <Routes>
+          <Route path="/" index element={<Home />} />
+          <Route path="/users" element={<Users />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
