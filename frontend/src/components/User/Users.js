@@ -28,7 +28,7 @@ class Users extends React.Component {
   };
 
   buscarDetalheUsuario = (id) => {
-    fetch("http://localhost:8080/pessoa/" + id, { method: "GET" })
+    fetch("http://localhost:3000/pessoas/" + id, { method: "GET" })
       .then((resposta) => resposta.json())
       .then((user) => {
         this.setState({
@@ -41,7 +41,7 @@ class Users extends React.Component {
   };
 
   cadastrarUsuario = (user) => {
-    fetch("http://localhost:8080/pessoa", {
+    fetch("http://localhost:3000/pessoas", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
@@ -55,7 +55,7 @@ class Users extends React.Component {
   };
 
   atualizarUsuario = (user) => {
-    fetch("http://localhost:8080/pessoa/" + user.id, {
+    fetch("http://localhost:3000/pessoas/" + user.id, {
       method: "PUT",
       Headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
@@ -63,13 +63,14 @@ class Users extends React.Component {
       if (resposta.ok) {
         this.buscarUsuarios();
       } else {
+        console.log(resposta)
         alert("Não foi possível atualizar o usuário");
       }
     });
   };
 
   deletarUsuario = (id) => {
-    fetch("http://localhost:8080/pessoa/" + id, { method: "DELETE" }).then(
+    fetch("http://localhost:3000/pessoas/" + id, { method: "DELETE" }).then(
       (resposta) => {
         if (resposta.ok) {
           this.buscarUsuarios();
@@ -100,7 +101,7 @@ class Users extends React.Component {
               <td>
                 <button
                   onClick={() => {
-                    this.atualizarUsuario(user.id);
+                    this.buscarDetalheUsuario(user.id);
                   }}
                   type="button"
                   class="btn btn-primary"
@@ -124,19 +125,115 @@ class Users extends React.Component {
     );
   }
 
-  renderFormulario() {}
+  atualizarStateNome = (evento) => {
+    this.setState({
+      nome: evento.target.value,
+    });
+  };
+
+  atualizarStateEmail = (evento) => {
+    this.setState({
+      email: evento.target.value,
+    });
+  };
+
+  atualizarStateData = (evento) => {
+    this.setState({
+        dtNascimento: evento.target.value,
+      });
+  };
+
+  submeterCadastroUsuario = () => {
+    const user = {
+      id: this.state.id,
+      nome: this.state.nome,
+      email: this.state.email,
+      dtNascimento: this.state.dtNascimento,
+    };
+
+    if (this.state === 0) {
+      this.cadastrarUsuario(user);
+    } else {
+      this.atualizarUsuario(user.id);
+    }
+  };
+
+  resetarState = () => {
+    this.setState({
+      id: 0,
+      nome: "",
+      email: "",
+      dtNascimento: "",
+    });
+  };
+
+  renderFormulario() {
+    return (
+      <form>
+        <div class="form-group">
+          <label for="nomeExample">Nome</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Digite o seu nome"
+            value={this.state.nome}
+            onChange={this.atualizarStateNome}
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputEmail">Email </label>
+          <input
+            type="email"
+            class="form-control"
+            aria-describedby="emailHelp"
+            placeholder="@hotmail.com"
+            value={this.state.email}
+            onChange={this.atualizarStateEmail}
+          />
+          <small id="emailHelp" class="form-text text-muted">
+            Utilize o melhor email.
+          </small>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="dataNascimento">Data de Nascimento</label>
+          <input
+            type="date"
+            className="form-control"
+            placeholder="dd/mm/yyyy"
+            value={this.state.dtNascimento}
+            onChange={this.atualizarStateData}
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          onClick={this.submeterCadastroUsuario}
+        >
+          Salvar
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-secondary"
+          onClick={this.resetarState}
+        >
+          Novo
+        </button>
+      </form>
+    );
+  }
 
   render() {
     return (
-        <div>
-    {
-      this.renderTabela()
-    }
-    </div>
-    )
+      <div>
+        <div>{this.renderFormulario()}</div>
+        <div>{this.renderTabela()}</div>
+      </div>
+    );
   }
-
-
 }
 
 export default Users;
