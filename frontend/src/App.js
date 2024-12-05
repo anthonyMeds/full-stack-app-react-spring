@@ -1,7 +1,7 @@
 
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
 import './App.css';
-import  Alunos  from './components/Alunos';
+import  Users  from './components/Users';
 import { Home } from './components/Home';
 
 import { Nav } from 'react-bootstrap';
@@ -15,14 +15,14 @@ function App() {
 
         <Nav variant="tabs">
           <Nav.Link as={Link} to="/">Pagina inicial</Nav.Link>
-          <Nav.Link as={Link} to="/alunos">Usuário</Nav.Link>
+          <Nav.Link as={Link} to="/alunos">Gerenciar usuários</Nav.Link>
 
         </Nav>
 
 
         <Routes>
           <Route path="/" index element={<Home />}></Route>
-          <Route path="/usuario" element={<Alunos />}></Route>
+          <Route path="/users" element={<Users />}></Route>
         </Routes>
 
       </BrowserRouter>
