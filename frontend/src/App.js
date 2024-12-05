@@ -1,34 +1,41 @@
+import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
+import { Home } from "./components/Home/Home";
+import Users from "./components/User/Users";
 
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom';
-
-import  Users  from './components/User/Users';
-import { Home } from './components/Home/Home';
-
-import { Nav } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Container, Nav, Navbar } from "react-bootstrap";
 
 function App() {
   return (
     <div className="App">
-      <h1>Sistema de Gerenciamento de Usuários </h1>
       <BrowserRouter>
+        {/* Barra de navegação */}
+        <Navbar bg="dark" variant="dark" expand="lg">
+          <Container>
+            <Navbar.Brand as={Link} to="/">
+              Sistema de Gerenciamento de Usuários
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <Nav.Link as={Link} to="/">
+                  Página Inicial
+                </Nav.Link>
+                <Nav.Link as={Link} to="/users">
+                  Gerenciar Usuários
+                </Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
 
-        <Nav variant="tabs">
-          <Nav.Link as={Link} to="/">Pagina inicial</Nav.Link>
-          <Nav.Link as={Link} to="/users">Gerenciar usuários</Nav.Link>
-
-        </Nav>
-
-
+        {/* Rotas */}
         <Routes>
-          <Route path="/" index element={<Home />}></Route>
-          <Route path="/users" element={<Users />}></Route>
+          <Route path="/" index element={<Home />} />
+          <Route path="/users" element={<Users />} />
         </Routes>
-
       </BrowserRouter>
-
     </div>
-
   );
 }
 

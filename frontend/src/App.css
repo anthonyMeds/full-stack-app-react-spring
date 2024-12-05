@@ -1,0 +1,72 @@
+/* Estilo Geral */
+body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+  }
+  
+  h1, h2, h3, h4, h5 {
+    font-weight: bold;
+  }
+  
+  .navbar {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .nav-link {
+    font-size: 1rem;
+    color: #ffffff;
+  }
+  
+  .nav-link:hover {
+    color: #00bfff;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: #343a40;
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+  }
+  
+  /* Responsividade */
+  
+  /* Telas pequenas (até 576px) */
+  @media (max-width: 576px) {
+    .navbar-brand {
+      font-size: 1.2rem;
+    }
+  
+    .nav-link {
+      font-size: 0.9rem;
+    }
+  }
+  
+  /* Telas médias (577px a 768px) */
+  @media (min-width: 577px) and (max-width: 768px) {
+    .navbar-brand {
+      font-size: 1.3rem;
+    }
+  }
+  
+  /* Telas grandes (769px a 1200px) */
+  @media (min-width: 769px) and (max-width: 1200px) {
+    .navbar-brand {
+      font-size: 1.4rem;
+    }
+  }
+  
+  /* Telas muito grandes (1201px ou mais) */
+  @media (min-width: 1201px) {
+    .navbar-brand {
+      font-size: 1.5rem;
+    }
+  }
+  
