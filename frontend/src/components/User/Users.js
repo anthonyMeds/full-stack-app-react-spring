@@ -15,10 +15,12 @@ class Users extends React.Component {
     };
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    this.buscarUsuarios();
+  }
 
   buscarUsuarios = () => {
-    fetch("http://localhost:8080/pessoas")
+    fetch("http://localhost:3000/pessoas")
       .then((resposta) => resposta.json())
       .then((dados) => {
         this.setState({ users: dados });
@@ -78,9 +80,63 @@ class Users extends React.Component {
     );
   };
 
+  renderTabela() {
+    return (
+      <Table striped bordered hover size="sm">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Data de Nascimento</th>
+            <th>Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          {this.state.users.map((user) => (
+            <tr>
+              <td> {user.nome} </td>
+              <td> {user.email} </td>
+              <td> {user.dtNascimento} </td>
+              <td>
+                <button
+                  onClick={() => {
+                    this.atualizarUsuario(user.id);
+                  }}
+                  type="button"
+                  class="btn btn-primary"
+                >
+                  Atualizar
+                </button>
+                <button
+                  onClick={() => {
+                    this.deletarUsuario(user.id);
+                  }}
+                  type="button"
+                  class="btn btn-danger"
+                >
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    );
+  }
+
+  renderFormulario() {}
+
+  render() {
+    return (
+        <div>
+    {
+      this.renderTabela()
+    }
+    </div>
+    )
+  }
 
 
-  
 }
 
 export default Users;
