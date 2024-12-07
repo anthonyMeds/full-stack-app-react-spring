@@ -1,6 +1,9 @@
 import React from "react";
 
 import Table from "react-bootstrap/Table";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+
 
 class Users extends React.Component {
   constructor(props) {
@@ -11,6 +14,8 @@ class Users extends React.Component {
       nome: "",
       email: "",
       dtNascimento: "",
+      showModal: false, 
+      modalTitle: "",
       users: [],
     };
   }
@@ -36,6 +41,8 @@ class Users extends React.Component {
           nome: user.nome,
           email: user.email,
           dtNascimento: user.dtNascimento,
+          showModal: true,
+          modalTitle: "Atualizar Usuário",
         });
       });
   };
@@ -63,7 +70,7 @@ class Users extends React.Component {
       if (resposta.ok) {
         this.buscarUsuarios();
       } else {
-        console.log(resposta)
+        console.log(resposta);
         alert("Não foi possível atualizar o usuário");
       }
     });
@@ -81,6 +88,7 @@ class Users extends React.Component {
     );
   };
 
+  // TABELA
   renderTabela() {
     return (
       <Table striped bordered hover size="sm">
@@ -94,7 +102,7 @@ class Users extends React.Component {
         </thead>
         <tbody>
           {this.state.users.map((user) => (
-            <tr>
+            <tr key={user.id}>
               <td> {user.nome} </td>
               <td> {user.email} </td>
               <td> {user.dtNascimento} </td>
@@ -125,6 +133,7 @@ class Users extends React.Component {
     );
   }
 
+  //  FORMULARIO
   atualizarStateNome = (evento) => {
     this.setState({
       nome: evento.target.value,
@@ -139,8 +148,13 @@ class Users extends React.Component {
 
   atualizarStateData = (evento) => {
     this.setState({
-        dtNascimento: evento.target.value,
-      });
+      dtNascimento: evento.target.value,
+    });
+  };
+
+  formatarDataParaBackend = (data) => {
+    const [ano, mes, dia] = data.split("-");
+    return `${dia}/${mes}/${ano}`;
   };
 
   submeterCadastroUsuario = () => {
@@ -148,14 +162,19 @@ class Users extends React.Component {
       id: this.state.id,
       nome: this.state.nome,
       email: this.state.email,
-      dtNascimento: this.state.dtNascimento,
+      dtNascimento: this.formatarDataParaBackend(this.state.dtNascimento),
     };
-
-    if (this.state === 0) {
+  
+    if (this.state.id === 0) {
+      // Novo cadastro
       this.cadastrarUsuario(user);
     } else {
-      this.atualizarUsuario(user.id);
+      // Atualização de usuário
+      this.atualizarUsuario(user);
     }
+  
+    // Fechar o modal após o salvamento
+    this.fecharModal();
   };
 
   resetarState = () => {
@@ -207,30 +226,53 @@ class Users extends React.Component {
           />
         </div>
 
-        <button
-          type="submit"
-          class="btn btn-primary"
-          onClick={this.submeterCadastroUsuario}
-        >
-          Salvar
-        </button>
-
-        <button
-          type="submit"
-          class="btn btn-secondary"
-          onClick={this.resetarState}
-        >
-          Novo
-        </button>
       </form>
+    );
+  }
+
+  // MODAL
+  abrirModalNovo = () => {
+    this.setState({
+      id: 0,
+      nome: "",
+      email: "",
+      dtNascimento: "",
+      showModal: true,
+      modalTitle: "Cadastrar Novo Usuário",
+    });
+  };
+
+  fecharModal = () => {
+    this.setState({ showModal: false });
+  };
+
+  renderModal() {
+    return (
+      <Modal show={this.state.showModal} onHide={this.fecharModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>{this.state.modalTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{this.renderFormulario()}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={this.fecharModal}>
+            Fechar
+          </Button>
+          <Button variant="primary" onClick={this.submeterCadastroUsuario}>
+            Salvar
+          </Button>
+        </Modal.Footer>
+      </Modal>
     );
   }
 
   render() {
     return (
       <div>
-        <div>{this.renderFormulario()}</div>
+        <Button variant="success" onClick={this.abrirModalNovo}>
+          Cadastrar Usuário
+        </Button>
         <div>{this.renderTabela()}</div>
+        <div>{this.renderModal()}</div>
       </div>
     );
   }
