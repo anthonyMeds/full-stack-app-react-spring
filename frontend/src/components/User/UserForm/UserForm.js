@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./UserForm.css";
 
 const UserForm = ({
@@ -12,16 +12,16 @@ const UserForm = ({
 }) => {
   const [errors, setErrors] = useState({});
 
-  const validateName = (name) => {
+  const validateName = useCallback((name) => {
     if (!name) {
       return "Nome é obrigatório";
     } else if (name.length > 120) {
       return "Nome não pode exceder 120 caracteres";
     }
     return "";
-  };
+  }, []);
 
-  const validateEmail = (email) => {
+  const validateEmail = useCallback((email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email) {
       return "Email é obrigatório";
@@ -29,9 +29,9 @@ const UserForm = ({
       return "Email inválido";
     }
     return "";
-  };
+  }, []);
 
-  const validateDate = (date) => {
+  const validateDate = useCallback((date) => {
     const dateRegex = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/\d{4}$/;
     if (!date) {
       return "Data de nascimento é obrigatória";
@@ -39,35 +39,21 @@ const UserForm = ({
       return "Data de nascimento deve estar no formato dd/mm/yyyy";
     }
     return "";
-  };
+  }, []);
 
-  const handleBlur = (field, value) => {
-    const newErrors = { ...errors };
-
-    switch (field) {
-      case "nome":
-        newErrors.nome = validateName(value);
-        break;
-      case "email":
-        newErrors.email = validateEmail(value);
-        break;
-      case "dtNascimento":
-        newErrors.dtNascimento = validateDate(value);
-        break;
-      default:
-        break;
-    }
-
-    setErrors(newErrors);
-  };
+  const validateAllFields = useCallback(() => {
+    setErrors({
+      nome: validateName(nome),
+      email: validateEmail(email),
+      dtNascimento: validateDate(dtNascimento),
+    });
+  }, [nome, email, dtNascimento, validateName, validateEmail, validateDate]);
 
   useEffect(() => {
     if (showErrorMessages) {
-      handleBlur("nome", nome);
-      handleBlur("email", email);
-      handleBlur("dtNascimento", dtNascimento);
+      validateAllFields();
     }
-  }, [showErrorMessages, nome, email, dtNascimento]);
+  }, [showErrorMessages, validateAllFields]);
 
   return (
     <form>
@@ -81,7 +67,7 @@ const UserForm = ({
           placeholder="Digite o seu nome"
           value={nome}
           onChange={atualizarStateNome}
-          onBlur={(e) => handleBlur("nome", e.target.value)}
+          onBlur={() => validateAllFields()}
           maxLength="120"
           required
         />
@@ -101,7 +87,7 @@ const UserForm = ({
           placeholder="@hotmail.com"
           value={email}
           onChange={atualizarStateEmail}
-          onBlur={(e) => handleBlur("email", e.target.value)}
+          onBlur={() => validateAllFields()}
           required
         />
         <small id="emailHelp" className="form-text text-muted">
@@ -117,11 +103,12 @@ const UserForm = ({
           Data de Nascimento <span className="required-asterisk">*</span>
         </label>
         <input
-          type="date"
+          type="text"
           className="form-control"
           value={dtNascimento}
-          onChange={atualizarStateData}
-          onBlur={(e) => handleBlur("dtNascimento", e.target.value)}
+          placeholder="dd/mm/yyyy"
+          onChange={(e) => atualizarStateData(e.target.value)}
+          onBlur={() => validateAllFields()}
           required
         />
         {errors.dtNascimento && (
