@@ -8,7 +8,7 @@ const UserForm = ({
   atualizarStateNome,
   atualizarStateEmail,
   atualizarStateData,
-  showErrorMessages
+  showErrorMessages,
 }) => {
   const [errors, setErrors] = useState({});
 
@@ -32,8 +32,11 @@ const UserForm = ({
   };
 
   const validateDate = (date) => {
+    const dateRegex = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/\d{4}$/;
     if (!date) {
       return "Data de nascimento é obrigatória";
+    } else if (!dateRegex.test(date)) {
+      return "Data de nascimento deve estar no formato dd/mm/yyyy";
     }
     return "";
   };
@@ -69,7 +72,9 @@ const UserForm = ({
   return (
     <form>
       <div className={`form-group ${errors.nome ? "has-error" : ""}`}>
-        <label htmlFor="nomeExample">Nome <span className="required-asterisk">*</span></label>
+        <label htmlFor="nomeExample">
+          Nome <span className="required-asterisk">*</span>
+        </label>
         <input
           type="text"
           className="form-control"
@@ -80,11 +85,15 @@ const UserForm = ({
           maxLength="120"
           required
         />
-        {errors.nome && <small className="form-text text-danger">{errors.nome}</small>}
+        {errors.nome && (
+          <small className="form-text text-danger">{errors.nome}</small>
+        )}
       </div>
 
       <div className={`form-group ${errors.email ? "has-error" : ""}`}>
-        <label htmlFor="exampleInputEmail">Email <span className="required-asterisk">*</span></label>
+        <label htmlFor="exampleInputEmail">
+          Email <span className="required-asterisk">*</span>
+        </label>
         <input
           type="email"
           className="form-control"
@@ -98,11 +107,15 @@ const UserForm = ({
         <small id="emailHelp" className="form-text text-muted">
           Utilize o melhor email.
         </small>
-        {errors.email && <small className="form-text text-danger">{errors.email}</small>}
+        {errors.email && (
+          <small className="form-text text-danger">{errors.email}</small>
+        )}
       </div>
 
       <div className={`form-group ${errors.dtNascimento ? "has-error" : ""}`}>
-        <label htmlFor="dataNascimento">Data de Nascimento <span className="required-asterisk">*</span></label>
+        <label htmlFor="dataNascimento">
+          Data de Nascimento <span className="required-asterisk">*</span>
+        </label>
         <input
           type="date"
           className="form-control"
@@ -111,7 +124,9 @@ const UserForm = ({
           onBlur={(e) => handleBlur("dtNascimento", e.target.value)}
           required
         />
-        {errors.dtNascimento && <small className="form-text text-danger">{errors.dtNascimento}</small>}
+        {errors.dtNascimento && (
+          <small className="form-text text-danger">{errors.dtNascimento}</small>
+        )}
       </div>
     </form>
   );
