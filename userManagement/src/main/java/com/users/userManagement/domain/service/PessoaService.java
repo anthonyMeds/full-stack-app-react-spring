@@ -7,6 +7,8 @@ import com.users.userManagement.config.exception.ServiceException;
 import com.users.userManagement.domain.entity.Pessoa;
 import com.users.userManagement.domain.repository.PessoaRepository;
 import jakarta.validation.constraints.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class PessoaService {
+
+    private static final Logger logger = LoggerFactory.getLogger(PessoaService.class);
 
     @Autowired
     private PessoaRepository pessoaRepository;
@@ -31,7 +35,13 @@ public class PessoaService {
         pessoa.setEmail(pessoaRequestDTO.email());
         pessoa.setDtNascimento(pessoaRequestDTO.dtNascimento());
 
-        pessoaRepository.save(pessoa);
+        try {
+            pessoaRepository.save(pessoa);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new ServiceException("Não foi possível cadastrar o usuário.");
+        }
+
 
         return new PessoaResponseDTO(pessoa.getIdPessoa(), "Cadastro realizado com sucesso");
     }
@@ -68,7 +78,12 @@ public class PessoaService {
         pessoa.setEmail(pessoaRequestDTO.email());
         pessoa.setDtNascimento(pessoaRequestDTO.dtNascimento());
 
-        pessoaRepository.save(pessoa);
+        try {
+            pessoaRepository.save(pessoa);
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            throw new ServiceException("Não foi possível atualizar o usuário.");
+        }
 
         return new PessoaResponseDTO(pessoa.getIdPessoa(), "Atualização realizada com sucesso.");
     }
