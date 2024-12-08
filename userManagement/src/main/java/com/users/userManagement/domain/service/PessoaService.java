@@ -74,6 +74,7 @@ public class PessoaService {
         }
 
         Pessoa pessoa = new Pessoa();
+        pessoa.setIdPessoa(idUsuario);
         pessoa.setNome(pessoaRequestDTO.nome());
         pessoa.setEmail(pessoaRequestDTO.email());
         pessoa.setDtNascimento(pessoaRequestDTO.dtNascimento());
