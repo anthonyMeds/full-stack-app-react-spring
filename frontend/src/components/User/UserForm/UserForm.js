@@ -31,12 +31,12 @@ const UserForm = ({
     return "";
   }, []);
 
-  const validateDate = (date) => {
+  const validateDate = useCallback((date) => {
     if (!date) {
       return "Data de nascimento é obrigatória";
     }
     return "";
-  };
+  }, []);
 
   const validateAllFields = useCallback(() => {
     setErrors({
