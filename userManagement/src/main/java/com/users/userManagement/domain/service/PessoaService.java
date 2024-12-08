@@ -6,6 +6,7 @@ import com.users.userManagement.DTO.pessoa.PessoaResponseDTO;
 import com.users.userManagement.config.exception.ServiceException;
 import com.users.userManagement.domain.entity.Pessoa;
 import com.users.userManagement.domain.repository.PessoaRepository;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,5 +55,21 @@ public class PessoaService {
                                 pessoa.getEmail(),
                                 pessoa.getDtNascimento() ))
                 .collect(Collectors.toList());
+    }
+
+    public PessoaResponseDTO atualizarUsuario(PessoaRequestDTO pessoaRequestDTO, @NotNull Integer idUsuario) throws ServiceException {
+
+        if (pessoaRepository.findById(idUsuario).isEmpty()) {
+            throw new ServiceException("Usuário não cadastrado.");
+        }
+
+        Pessoa pessoa = new Pessoa();
+        pessoa.setNome(pessoaRequestDTO.nome());
+        pessoa.setEmail(pessoaRequestDTO.email());
+        pessoa.setDtNascimento(pessoaRequestDTO.dtNascimento());
+
+        pessoaRepository.save(pessoa);
+
+        return new PessoaResponseDTO(pessoa.getIdPessoa(), "Atualização realizada com sucesso.");
     }
 }

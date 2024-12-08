@@ -31,6 +31,13 @@ public class PessoaController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/{idUsuario}")
+    public ResponseEntity<PessoaResponseDTO> atualizarUsuario(@Valid @RequestBody PessoaRequestDTO pessoaRequestDTO,
+                                                              @PathVariable @NotNull Integer idUsuario) throws ServiceException {
+        PessoaResponseDTO response = pessoaService.atualizarUsuario(pessoaRequestDTO, idUsuario);
+        return ResponseEntity.ok(response);
+    }
+
     @GetMapping("/{idUsuario}")
     public ResponseEntity<DetalhePessoaResponseDTO> buscarDetalheUsuario(@PathVariable @NotNull Integer idUsuario) throws ServiceException {
         DetalhePessoaResponseDTO response = pessoaService.buscarDetalheUsuario(idUsuario);
