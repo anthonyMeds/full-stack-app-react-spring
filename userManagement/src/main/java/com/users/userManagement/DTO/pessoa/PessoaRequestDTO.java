@@ -11,7 +11,7 @@ import java.time.LocalDate;
 
 public record PessoaRequestDTO(
         @NotBlank(message = "O nome é obrigatório")
-        @Size(max = 12, message = "Tamanho máximo do campo de 120 dígitos")
+        @Size(max = 120, message = "Tamanho máximo do campo de 120 dígitos")
         @Schema(example = "joao teste")
         String nome,
 

@@ -27,7 +27,7 @@ public class PessoaService {
     public PessoaResponseDTO cadastrarPessoa(PessoaRequestDTO pessoaRequestDTO) throws ServiceException {
 
         if (pessoaRepository.findByEmail(pessoaRequestDTO.email()).isPresent()) {
-            throw new ServiceException("Usuário já cadastrado");
+            throw new ServiceException("Email já cadastrado");
         }
 
         Pessoa pessoa = new Pessoa();
@@ -71,6 +71,10 @@ public class PessoaService {
 
         if (pessoaRepository.findById(idUsuario).isEmpty()) {
             throw new ServiceException("Usuário não cadastrado.");
+        }
+
+        if (pessoaRepository.findByEmail(pessoaRequestDTO.email()).isPresent()) {
+            throw new ServiceException("Email já cadastrado");
         }
 
         Pessoa pessoa = new Pessoa();
