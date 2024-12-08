@@ -23,7 +23,7 @@ public class Pessoa {
     @Column(length = 255)
     private String email;
 
-    private LocalDate nascimento;
+    private LocalDate dtNascimento;
 
 
 

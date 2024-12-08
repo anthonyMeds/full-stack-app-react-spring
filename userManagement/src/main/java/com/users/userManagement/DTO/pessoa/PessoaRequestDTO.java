@@ -22,7 +22,7 @@ public record PessoaRequestDTO(
         @NotNull
         @JsonFormat(pattern = "dd/MM/yyyy")
         @Schema(type = "string", pattern = "dd/MM/yyyy", description = "Data de nascimento", example = "11/05/2012")
-        LocalDate nascimento
+        LocalDate dtNascimento
 
 ) {
 }
