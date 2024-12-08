@@ -43,14 +43,14 @@ public class PessoaService {
         }
 
 
-        return new PessoaResponseDTO(pessoa.getIdPessoa(), "Cadastro realizado com sucesso");
+        return new PessoaResponseDTO(pessoa.getId(), "Cadastro realizado com sucesso");
     }
 
     public DetalhePessoaResponseDTO buscarDetalheUsuario(Integer idUsuario) throws ServiceException {
         Pessoa pessoa = pessoaRepository.findById(idUsuario)
                 .orElseThrow(() -> new ServiceException("Pessoa não encontrada"));
 
-        return new DetalhePessoaResponseDTO(pessoa.getIdPessoa(), pessoa.getNome(), pessoa.getEmail(), pessoa.getDtNascimento());
+        return new DetalhePessoaResponseDTO(pessoa.getId(), pessoa.getNome(), pessoa.getEmail(), pessoa.getDtNascimento());
     }
 
     public List<DetalhePessoaResponseDTO> buscarUsuarios() {
@@ -60,7 +60,7 @@ public class PessoaService {
         return pessoasList.stream()
                 .map(pessoa ->
                         new DetalhePessoaResponseDTO(
-                                pessoa.getIdPessoa(),
+                                pessoa.getId(),
                                 pessoa.getNome(),
                                 pessoa.getEmail(),
                                 pessoa.getDtNascimento() ))
@@ -69,16 +69,20 @@ public class PessoaService {
 
     public PessoaResponseDTO atualizarUsuario(PessoaRequestDTO pessoaRequestDTO, @NotNull Integer idUsuario) throws ServiceException {
 
-        if (pessoaRepository.findById(idUsuario).isEmpty()) {
-            throw new ServiceException("Usuário não cadastrado.");
-        }
+        pessoaRepository.findById(idUsuario).orElseThrow(() -> new ServiceException("Usuário não cadastrado."));
 
-        if (pessoaRepository.findByEmail(pessoaRequestDTO.email()).isPresent()) {
-            throw new ServiceException("Email já cadastrado");
-        }
+        pessoaRepository.findByEmail(pessoaRequestDTO.email()).ifPresent(pessoaExistente -> {
+            if (!pessoaExistente.getId().equals(idUsuario)) {
+                try {
+                    throw new ServiceException("E-mail já cadastrado por outro usuário.");
+                } catch (ServiceException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
 
         Pessoa pessoa = new Pessoa();
-        pessoa.setIdPessoa(idUsuario);
+        pessoa.setId(idUsuario);
         pessoa.setNome(pessoaRequestDTO.nome());
         pessoa.setEmail(pessoaRequestDTO.email());
         pessoa.setDtNascimento(pessoaRequestDTO.dtNascimento());
@@ -90,7 +94,7 @@ public class PessoaService {
             throw new ServiceException("Não foi possível atualizar o usuário.");
         }
 
-        return new PessoaResponseDTO(pessoa.getIdPessoa(), "Atualização realizada com sucesso.");
+        return new PessoaResponseDTO(pessoa.getId(), "Atualização realizada com sucesso.");
     }
 
     public PessoaResponseDTO deletarUsuario(Integer id) throws ServiceException {
