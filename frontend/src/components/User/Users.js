@@ -45,44 +45,60 @@ class Users extends React.Component {
   };
 
   handleBuscarDetalheUsuario = async (id) => {
-    const user = await buscarDetalheUsuario(id);
-    this.setState({
-      id: user.id,
-      nome: user.nome,
-      email: user.email,
-      dtNascimento: user.dtNascimento,
-      showModal: true,
-      modalTitle: "Atualizar Usuário",
-    });
+    try {
+      const user = await buscarDetalheUsuario(id);
+      this.setState({
+        id: user.id,
+        nome: user.nome,
+        email: user.email,
+        dtNascimento: user.dtNascimento,
+        showModal: true,
+        modalTitle: "Atualizar Usuário",
+      });
+    } catch (error) {
+      toast.error("Erro ao buscar detalhes do usuário.");
+    }
   };
 
   handleCadastrarUsuario = async (user) => {
-    const resposta = await cadastrarUsuario(user);
-    if (resposta.ok) {
-      this.carregarUsuarios();
-      toast.success("Usuário cadastrado com sucesso!");
-    } else {
-      toast.error("Não foi possível cadastrar o usuário");
+    try {
+      const resposta = await cadastrarUsuario(user);
+      if (resposta.ok) {
+        this.carregarUsuarios();
+        toast.success("Usuário cadastrado com sucesso!");
+      } else {
+        toast.error("Não foi possível cadastrar o usuário.");
+      }
+    } catch (error) {
+      toast.error("Erro ao cadastrar usuário.");
     }
   };
 
   handleAtualizarUsuario = async (user) => {
-    const resposta = await atualizarUsuario(user);
-    if (resposta.ok) {
-      this.carregarUsuarios();
-      toast.success("Usuário atualizado com sucesso!");
-    } else {
-      toast.error("Não foi possível atualizar o usuário");
+    try {
+      const resposta = await atualizarUsuario(user);
+      if (resposta.ok) {
+        this.carregarUsuarios();
+        toast.success("Usuário atualizado com sucesso!");
+      } else {
+        toast.error("Não foi possível atualizar o usuário.");
+      }
+    } catch (error) {
+      toast.error("Erro ao atualizar usuário.");
     }
   };
 
   handleDeletarUsuario = async (id) => {
-    const resposta = await deletarUsuario(id);
-    if (resposta.ok) {
-      this.carregarUsuarios();
-      toast.success("Usuário excluído com sucesso!");
-    } else {
-      toast.error("Não foi possível excluir o usuário");
+    try {
+      const resposta = await deletarUsuario(id);
+      if (resposta.ok) {
+        this.carregarUsuarios();
+        toast.success("Usuário excluído com sucesso!");
+      } else {
+        toast.error("Não foi possível excluir o usuário.");
+      }
+    } catch (error) {
+      toast.error("Erro ao excluir usuário.");
     }
   };
 

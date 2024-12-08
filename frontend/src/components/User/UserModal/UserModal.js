@@ -19,13 +19,7 @@ const UserModal = ({
   const [showErrorMessages, setShowErrorMessages] = useState(false);
 
   const validateFields = () => {
-    const errors = {
-      nome: !nome ? "Nome é obrigatório" : nome.length > 120 ? "Nome não pode exceder 120 caracteres" : "",
-      email: !email ? "Email é obrigatório" : /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? "" : "Email inválido",
-      dtNascimento: !dtNascimento ? "Data de nascimento é obrigatória" : "",
-    };
-
-    return Object.values(errors).every(error => error === "");
+    return nome && email && dtNascimento;
   };
 
   const handleSubmit = () => {

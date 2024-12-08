@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./UserForm.css";
 
 const UserForm = ({
@@ -8,7 +8,7 @@ const UserForm = ({
   atualizarStateNome,
   atualizarStateEmail,
   atualizarStateData,
-  showErrorMessages
+  showErrorMessages,
 }) => {
   const [errors, setErrors] = useState({});
 
@@ -55,50 +55,48 @@ const UserForm = ({
   return (
     <form>
       <div className={`form-group ${errors.nome ? "has-error" : ""}`}>
-        <label htmlFor="nomeExample">Nome <span className="required-asterisk">*</span></label>
+        <label>Nome *</label>
         <input
           type="text"
           className="form-control"
-          placeholder="Digite o seu nome"
+          placeholder="Digite seu nome"
           value={nome}
           onChange={atualizarStateNome}
-          onBlur={() => validateAllFields()}
           maxLength="120"
-          required
+          onBlur={validateAllFields}
         />
-        {errors.nome && <small className="form-text text-danger">{errors.nome}</small>}
+        {errors.nome && (
+          <small className="form-text text-danger">{errors.nome}</small>
+        )}
       </div>
 
       <div className={`form-group ${errors.email ? "has-error" : ""}`}>
-        <label htmlFor="exampleInputEmail">Email <span className="required-asterisk">*</span></label>
+        <label>Email *</label>
         <input
           type="email"
           className="form-control"
-          aria-describedby="emailHelp"
-          placeholder="@hotmail.com"
+          placeholder="Digite seu email"
           value={email}
           onChange={atualizarStateEmail}
-          onBlur={() => validateAllFields()}
-          required
+          onBlur={validateAllFields}
         />
-        <small id="emailHelp" className="form-text text-muted">
-          Utilize o melhor email.
-        </small>
-        {errors.email && <small className="form-text text-danger">{errors.email}</small>}
+        {errors.email && (
+          <small className="form-text text-danger">{errors.email}</small>
+        )}
       </div>
 
       <div className={`form-group ${errors.dtNascimento ? "has-error" : ""}`}>
-        <label htmlFor="dataNascimento">Data de Nascimento <span className="required-asterisk">*</span></label>
+        <label>Data de Nascimento *</label>
         <input
-          type="text"
+          type="date"
           className="form-control"
           value={dtNascimento}
-          placeholder="dd/mm/yyyy"
-          onChange={(e) => atualizarStateData(e.target.value)}
-          onBlur={() => validateAllFields()}
-          required
+          onChange={atualizarStateData}
+          onBlur={validateAllFields}
         />
-        {errors.dtNascimento && <small className="form-text text-danger">{errors.dtNascimento}</small>}
+        {errors.dtNascimento && (
+          <small className="form-text text-danger">{errors.dtNascimento}</small>
+        )}
       </div>
     </form>
   );
