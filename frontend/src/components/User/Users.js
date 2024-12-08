@@ -29,14 +29,19 @@ class Users extends React.Component {
 
   componentDidMount() {
     this.carregarUsuarios();
-    if (this.state.users.length === 0) {
-      toast.info("Nenhum usuário cadastrado.");
-    }
   }
 
   carregarUsuarios = async () => {
-    const dados = await buscarUsuarios();
-    this.setState({ users: dados });
+    try {
+      const dados = await buscarUsuarios();
+      if (Array.isArray(dados) && dados.length === 0) {
+        toast.info("Nenhum usuário cadastrado.");
+      }
+      this.setState({ users: dados });
+    } catch (error) {
+      toast.error("Erro ao carregar usuários.");
+      console.error("Erro ao carregar usuários:", error);
+    }
   };
 
   handleBuscarDetalheUsuario = async (id) => {
