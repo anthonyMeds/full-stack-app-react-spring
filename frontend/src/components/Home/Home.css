@@ -1,132 +1,140 @@
-/* Estilo Geral */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@400;700&display=swap');
+
 body {
-    font-family: "Roboto", sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #343a40;
-    background-color: #f8f9fa;
+  font-family: "Roboto", sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #343a40;
+  background-color: #f8f9fa;
+}
+
+.Home {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+.principal {
+  background-image: url('../../assets/background.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: white;
+}
+
+.principal .overlay{
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.principal .container {
+  width: 80vw;
+  margin: 0 auto;
+  font-family: "Montserrat", sans-serif;
+}
+
+.principal h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.principal p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.principal button {
+  font-size: 1.2rem;
+  padding: 0.8rem 1.5rem;
+}
+
+.features {
+  padding: 4rem 1rem; /* Adiciona respiro lateral */
+}
+
+.features h2 {
+  margin-bottom: 2rem;
+}
+
+.features .col-md-4 {
+  margin-bottom: 2rem;
+  padding: 0 1rem; /* Adiciona respiro lateral */
+}
+
+.features .feature-image {
+  width: 100%; /* Padrão para imagens responsivas */
+  max-width: 120px; /* Limita tamanho máximo */
+  height: auto; /* Mantém proporção */
+  object-fit: contain;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  padding: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+  padding: 1rem;
+  font-size: 0.9rem;
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+}
+
+/* Telas pequenas (até 576px) */
+@media (max-width: 576px) {
+  .principal h1 {
+    font-size: 1.8rem;
   }
-  
-  h1, h2 {
-    font-weight: bold;
+
+  .principal p {
+    font-size: 1rem;
   }
-  
-  /* Funcionalidades - Estilo das imagens */
+
   .features .feature-image {
-    width: 100%; /* Padrão para imagens responsivas */
-    max-width: 120px; /* Limita tamanho máximo */
-    height: auto; /* Mantém proporção */
-    object-fit: contain;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    padding: 10px;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 80px;
   }
-  
-  /* Funcionalidades - Geral */
-  .features {
-    padding: 4rem 0;
+}
+
+/* Telas médias (577px a 768px) */
+@media (min-width: 577px) and (max-width: 768px) {
+  .principal h1 {
+    font-size: 2.2rem;
   }
-  
-  .features h2 {
-    margin-bottom: 2rem;
+
+  .features .feature-image {
+    max-width: 100px;
   }
-  
-  .features .col-md-4 {
-    margin-bottom: 2rem;
+}
+
+/* Telas grandes (769px a 1200px) */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .principal h1 {
+    font-size: 2.6rem;
   }
-  
-  /* Principal */
-  .principal {
-    background-image: url('../../assets/background.jpg');
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    color: white;
+
+  .features .feature-image {
+    max-width: 110px;
   }
-  
-  .principal .overlay {
-    background-color: rgba(0, 0, 0, 0.6);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
+}
+
+/* Telas muito grandes (1201px ou mais) */
+@media (min-width: 1201px) {
   .principal h1 {
     font-size: 3rem;
-    margin-bottom: 1rem;
   }
-  
-  .principal p {
-    font-size: 1.2rem;
-    margin-bottom: 1.5rem;
+
+  .features .feature-image {
+    max-width: 120px;
   }
-  
-  .principal button {
-    font-size: 1.2rem;
-    padding: 0.8rem 1.5rem;
-  }
-  
-  /* Rodapé */
-  .footer {
-    padding: 1rem;
-    font-size: 0.9rem;
-  }
-  
-  /* Responsividade */
-  
-  /* Telas pequenas (até 576px) */
-  @media (max-width: 576px) {
-    .principal h1 {
-      font-size: 1.8rem;
-    }
-  
-    .principal p {
-      font-size: 1rem;
-    }
-  
-    .features .feature-image {
-      max-width: 80px;
-    }
-  }
-  
-  /* Telas médias (577px a 768px) */
-  @media (min-width: 577px) and (max-width: 768px) {
-    .principal h1 {
-      font-size: 2.2rem;
-    }
-  
-    .features .feature-image {
-      max-width: 100px;
-    }
-  }
-  
-  /* Telas grandes (769px a 1200px) */
-  @media (min-width: 769px) and (max-width: 1200px) {
-    .principal h1 {
-      font-size: 2.6rem;
-    }
-  
-    .features .feature-image {
-      max-width: 110px;
-    }
-  }
-  
-  /* Telas muito grandes (1201px ou mais) */
-  @media (min-width: 1201px) {
-    .principal h1 {
-      font-size: 3rem;
-    }
-  
-    .features .feature-image {
-      max-width: 120px;
-    }
-  }
-  
+}

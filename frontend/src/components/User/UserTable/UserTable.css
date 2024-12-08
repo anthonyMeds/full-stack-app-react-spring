@@ -1,24 +1,66 @@
+
+.table-container {
+  width: 100%;
+  max-height: 70%; 
+  overflow-y: auto; /* Ativa rolagem vertical */
+  overflow-x: auto; /* Ativa rolagem horizontal */
+  border: 1px solid #ddd; 
+  background-color: #ffffff; 
+}
+
+/* Estilo básico da tabela */
 .table {
-    margin-top: 1rem;
-  }
+  width: 100%; 
+  border-collapse: collapse; 
+}
+
+/* Fixa o cabeçalho da tabela */
+.table thead th {
+  position: sticky; /* Fixa o cabeçalho */
+  top: 0; /* Mantém o cabeçalho no topo do contêiner */
+  background-color: #f8f9fa; /* Fundo do cabeçalho */
+  z-index: 2; /* Garante que o cabeçalho fique acima das linhas */
+  text-align: center; 
+  padding: 0.75rem; 
+  border: 1px solid #ddd; 
+}
+
+/* Estilo para células */
+.table th,
+.table td {
+  text-align: center; 
+  vertical-align: middle; 
+  padding: 0.75rem; 
+  white-space: nowrap; 
   
-  .table th,
-  .table td {
-    text-align: center;
-    vertical-align: middle;
+}
+
+.table td:nth-child(1), /* Primeira coluna: Nome */
+.table td:nth-child(2)  /* Segunda coluna: Email */ {
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
+  white-space: normal; 
+  max-width: 200px; 
+}
+
+.table td {
+  max-width: 150px; 
+}
+
+.btn-container {
+  display: flex; 
+  justify-content: center; 
+  flex-wrap: wrap; 
+  gap: 0.5rem; 
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.9rem;
   }
-  
+
   .btn {
-    margin: 0 0.5rem;
+    width: 100%; 
   }
-  
-  @media (max-width: 768px) {
-    .table {
-      font-size: 0.9rem;
-    }
-  
-    .btn {
-      width: 100%;
-      margin: 0.5rem 0;
-    }
-  }
+}

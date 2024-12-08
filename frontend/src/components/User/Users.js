@@ -2,6 +2,8 @@ import React from "react";
 import UserTable from "./UserTable/UserTable";
 import UserModal from "./UserModal/UserModal";
 import Button from "react-bootstrap/Button";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   buscarUsuarios,
   buscarDetalheUsuario,
@@ -30,46 +32,73 @@ class Users extends React.Component {
   }
 
   carregarUsuarios = async () => {
-    const dados = await buscarUsuarios();
-    this.setState({ users: dados });
+    try {
+      const dados = await buscarUsuarios();
+      if (Array.isArray(dados) && dados.length === 0) {
+        toast.info("Nenhum usuário cadastrado.");
+      }
+      this.setState({ users: dados });
+    } catch (error) {
+      toast.error("Erro ao carregar usuários.");
+      console.error("Erro ao carregar usuários:", error);
+    }
   };
 
   handleBuscarDetalheUsuario = async (id) => {
-    const user = await buscarDetalheUsuario(id);
-    this.setState({
-      id: user.id,
-      nome: user.nome,
-      email: user.email,
-      dtNascimento: user.dtNascimento,
-      showModal: true,
-      modalTitle: "Atualizar Usuário",
-    });
+    try {
+      const user = await buscarDetalheUsuario(id);
+      this.setState({
+        id: user.id,
+        nome: user.nome,
+        email: user.email,
+        dtNascimento: user.dtNascimento,
+        showModal: true,
+        modalTitle: "Atualizar Usuário",
+      });
+    } catch (error) {
+      toast.error("Erro ao buscar detalhes do usuário.");
+    }
   };
 
   handleCadastrarUsuario = async (user) => {
-    const resposta = await cadastrarUsuario(user);
-    if (resposta.ok) {
-      this.carregarUsuarios();
-    } else {
-      alert("Não foi possível cadastrar o usuário");
+    try {
+      const resposta = await cadastrarUsuario(user);
+      if (resposta.ok) {
+        this.carregarUsuarios();
+        toast.success("Usuário cadastrado com sucesso!");
+      } else {
+        toast.error("Não foi possível cadastrar o usuário.");
+      }
+    } catch (error) {
+      toast.error("Erro ao cadastrar usuário.");
     }
   };
 
   handleAtualizarUsuario = async (user) => {
-    const resposta = await atualizarUsuario(user);
-    if (resposta.ok) {
-      this.carregarUsuarios();
-    } else {
-      alert("Não foi possível atualizar o usuário");
+    try {
+      const resposta = await atualizarUsuario(user);
+      if (resposta.ok) {
+        this.carregarUsuarios();
+        toast.success("Usuário atualizado com sucesso!");
+      } else {
+        toast.error("Não foi possível atualizar o usuário.");
+      }
+    } catch (error) {
+      toast.error("Erro ao atualizar usuário.");
     }
   };
 
   handleDeletarUsuario = async (id) => {
-    const resposta = await deletarUsuario(id);
-    if (resposta.ok) {
-      this.carregarUsuarios();
-    } else {
-      alert("Não foi possível excluir o usuário");
+    try {
+      const resposta = await deletarUsuario(id);
+      if (resposta.ok) {
+        this.carregarUsuarios();
+        toast.success("Usuário excluído com sucesso!");
+      } else {
+        toast.error("Não foi possível excluir o usuário.");
+      }
+    } catch (error) {
+      toast.error("Erro ao excluir usuário.");
     }
   };
 
@@ -107,11 +136,12 @@ class Users extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="user-container">
         <Button variant="success" onClick={this.abrirModalNovo}>
           Cadastrar Usuário
         </Button>
         <UserTable
+          className="table-container"
           users={this.state.users}
           buscarDetalheUsuario={this.handleBuscarDetalheUsuario}
           deletarUsuario={this.handleDeletarUsuario}
@@ -125,9 +155,12 @@ class Users extends React.Component {
           dtNascimento={this.state.dtNascimento}
           atualizarStateNome={(e) => this.setState({ nome: e.target.value })}
           atualizarStateEmail={(e) => this.setState({ email: e.target.value })}
-          atualizarStateData={(e) => this.setState({ dtNascimento: e.target.value })}
+          atualizarStateData={(e) =>
+            this.setState({ dtNascimento: e.target.value })
+          }
           submeterCadastroUsuario={this.submeterCadastroUsuario}
         />
+        <ToastContainer />
       </div>
     );
   }

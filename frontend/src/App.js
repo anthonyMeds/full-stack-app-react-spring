@@ -1,6 +1,7 @@
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 import { Home } from "./components/Home/Home";
 import Users from "./components/User/Users";
+import "./App.css";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Nav, Navbar } from "react-bootstrap";
@@ -9,9 +10,8 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        {/* Barra de navegação */}
-        <Navbar bg="dark" variant="dark" expand="lg">
-          <Container>
+        <Navbar className="navbar" bg="dark" variant="dark" expand="lg" >
+          <Container className="navbar-container">
             <Navbar.Brand as={Link} to="/">
               Sistema de Gerenciamento de Usuários
             </Navbar.Brand>

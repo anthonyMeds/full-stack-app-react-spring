@@ -4,13 +4,13 @@
       "id": "1",
       "nome": "pedro teste",
       "email": "pedrinhomoral@gmail.com",
-      "dtNascimento": "03/02/2020"
+      "dtNascimento": "04/12/2024"
     },
     {
       "id": "2",
       "nome": "josias",
       "email": "josaf@gmail.com",
-      "dtNascimento": "03/12/2024"
+      "dtNascimento": "12/12/2024"
     },
     {
       "id": "3",
@@ -23,18 +23,6 @@
       "nome": "a",
       "email": "a@gmail.com",
       "dtNascimento": "20/05/2000"
-    },
-    {
-      "id": "0",
-      "nome": "aal",
-      "email": "a@gmail.com",
-      "dtNascimento": "2024-12-07"
-    },
-    {
-      "id": 0,
-      "nome": "opa",
-      "email": "opa@gmail.com",
-      "dtNascimento": "2024-12-03"
     }
   ]
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import UserForm from "../UserForm/UserForm";
@@ -16,6 +16,19 @@ const UserModal = ({
   atualizarStateData,
   submeterCadastroUsuario,
 }) => {
+  const [showErrorMessages, setShowErrorMessages] = useState(false);
+
+  const validateFields = () => {
+    return nome && email && dtNascimento;
+  };
+
+  const handleSubmit = () => {
+    setShowErrorMessages(true);
+    if (validateFields()) {
+      submeterCadastroUsuario();
+    }
+  };
+
   return (
     <Modal show={showModal} onHide={fecharModal}>
       <Modal.Header closeButton>
@@ -29,13 +42,14 @@ const UserModal = ({
           atualizarStateNome={atualizarStateNome}
           atualizarStateEmail={atualizarStateEmail}
           atualizarStateData={atualizarStateData}
+          showErrorMessages={showErrorMessages}
         />
       </Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={fecharModal}>
           Fechar
         </Button>
-        <Button variant="primary" onClick={submeterCadastroUsuario}>
+        <Button variant="primary" onClick={handleSubmit}>
           Salvar
         </Button>
       </Modal.Footer>
