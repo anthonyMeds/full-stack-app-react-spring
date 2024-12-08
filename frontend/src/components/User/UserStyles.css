@@ -1,19 +1,82 @@
-.users-container {
-    padding: 2rem;
-    background-color: #f8f9fa;
+.user-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem;
+}
+
+.btn {
+  margin: 0.25rem;
+}
+
+.btn-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.table-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  margin-top: 1rem;
+  border: 1px solid #ddd;
+  background-color: #ffffff;
+}
+
+.table {
+  width: 100%;
+}
+
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+  padding: 0.75rem;
+  white-space: nowrap;
+}
+
+.table td {
+  max-width: 150px;
+}
+
+.table td:last-child {
+  white-space: normal;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-success:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+}
+.btn-success:active {
+  background-color: #1e7e34;
+  transform: translateY(0);
+}
+.btn-success:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(72, 180, 97, 0.5);
+}
+
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.9rem;
   }
-  
-  .btn-success {
-    margin-bottom: 1rem;
+
+  .btn {
+    width: 100%;
   }
-  
-  @media (max-width: 768px) {
-    .users-container {
-      padding: 1rem;
-    }
-  
-    .btn-success {
-      width: 100%;
-      margin-bottom: 1rem;
-    }
-  }
+}

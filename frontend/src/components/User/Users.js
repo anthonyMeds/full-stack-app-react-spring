@@ -107,11 +107,11 @@ class Users extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="user-container">
         <Button variant="success" onClick={this.abrirModalNovo}>
           Cadastrar Usuário
         </Button>
-        <UserTable
+        <UserTable className="table-container"
           users={this.state.users}
           buscarDetalheUsuario={this.handleBuscarDetalheUsuario}
           deletarUsuario={this.handleDeletarUsuario}
