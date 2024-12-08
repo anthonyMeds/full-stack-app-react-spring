@@ -12,6 +12,7 @@ import {
   deletarUsuario,
 } from "../../services/userService";
 import "./UserStyles.css";
+import { format } from "date-fns";
 
 class Users extends React.Component {
   constructor(props) {
@@ -39,11 +40,12 @@ class Users extends React.Component {
       }
       this.setState({ users: dados });
     } catch (error) {
-      toast.error("Erro ao carregar usuários.");
+      const mensagemErro = await this.extrairErroDoBackend(error);
+      toast.error(mensagemErro || "Erro ao carregar usuários.");
       console.error("Erro ao carregar usuários:", error);
     }
   };
-
+  
   handleBuscarDetalheUsuario = async (id) => {
     try {
       const user = await buscarDetalheUsuario(id);
@@ -56,10 +58,11 @@ class Users extends React.Component {
         modalTitle: "Atualizar Usuário",
       });
     } catch (error) {
-      toast.error("Erro ao buscar detalhes do usuário.");
+      const mensagemErro = await this.extrairErroDoBackend(error);
+      toast.error(mensagemErro || "Erro ao buscar detalhes do usuário.");
     }
   };
-
+  
   handleCadastrarUsuario = async (user) => {
     try {
       const resposta = await cadastrarUsuario(user);
@@ -67,13 +70,15 @@ class Users extends React.Component {
         this.carregarUsuarios();
         toast.success("Usuário cadastrado com sucesso!");
       } else {
-        toast.error("Não foi possível cadastrar o usuário.");
+        const erro = await resposta.json();
+        toast.error(erro.error || "Não foi possível cadastrar o usuário.");
       }
     } catch (error) {
-      toast.error("Erro ao cadastrar usuário.");
+      const mensagemErro = await this.extrairErroDoBackend(error);
+      toast.error(mensagemErro || "Erro ao cadastrar usuário.");
     }
   };
-
+  
   handleAtualizarUsuario = async (user) => {
     try {
       const resposta = await atualizarUsuario(user);
@@ -81,13 +86,15 @@ class Users extends React.Component {
         this.carregarUsuarios();
         toast.success("Usuário atualizado com sucesso!");
       } else {
-        toast.error("Não foi possível atualizar o usuário.");
+        const erro = await resposta.json();
+        toast.error(erro.error || "Não foi possível atualizar o usuário.");
       }
     } catch (error) {
-      toast.error("Erro ao atualizar usuário.");
+      const mensagemErro = await this.extrairErroDoBackend(error);
+      toast.error(mensagemErro || "Erro ao atualizar usuário.");
     }
   };
-
+  
   handleDeletarUsuario = async (id) => {
     try {
       const resposta = await deletarUsuario(id);
@@ -95,11 +102,26 @@ class Users extends React.Component {
         this.carregarUsuarios();
         toast.success("Usuário excluído com sucesso!");
       } else {
-        toast.error("Não foi possível excluir o usuário.");
+        const erro = await resposta.json();
+        toast.error(erro.error || "Não foi possível excluir o usuário.");
       }
     } catch (error) {
-      toast.error("Erro ao excluir usuário.");
+      const mensagemErro = await this.extrairErroDoBackend(error);
+      toast.error(mensagemErro || "Erro ao excluir usuário.");
     }
+  };
+  
+  // Função auxiliar para extrair erros do backend
+  extrairErroDoBackend = async (error) => {
+    if (error.response) {
+      try {
+        const erro = await error.response.json(); // Tenta extrair o JSON da resposta
+        return erro.error; // Retorna a mensagem de erro do backend
+      } catch {
+        return error.response.statusText; // Caso não consiga extrair o JSON, retorna o status
+      }
+    }
+    return null; // Se não for possível identificar, retorna nulo
   };
 
   abrirModalNovo = () => {
@@ -122,15 +144,18 @@ class Users extends React.Component {
       id: this.state.id,
       nome: this.state.nome,
       email: this.state.email,
-      dtNascimento: this.state.dtNascimento,
+      // Formata a data no formato dd/MM/yyyy
+      dtNascimento: this.state.dtNascimento
+        ? format(new Date(this.state.dtNascimento), "dd/MM/yyyy")
+        : null,
     };
-
+  
     if (this.state.id === 0) {
       this.handleCadastrarUsuario(user);
     } else {
       this.handleAtualizarUsuario(user);
     }
-
+  
     this.fecharModal();
   };
 
