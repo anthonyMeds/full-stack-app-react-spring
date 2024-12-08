@@ -1,0 +1,4 @@
+userManagement/.gitattributes
+userManagement/mvnw
+*.cmd
+*.properties
