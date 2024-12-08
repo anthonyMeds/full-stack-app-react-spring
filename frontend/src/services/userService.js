@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/pessoas";
+const API_URL = "http://localhost:8093/pessoa";
 
 export const buscarUsuarios = async () => {
   const resposta = await fetch(API_URL);
