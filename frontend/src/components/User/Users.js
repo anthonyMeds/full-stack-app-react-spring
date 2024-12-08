@@ -2,6 +2,8 @@ import React from "react";
 import UserTable from "./UserTable/UserTable";
 import UserModal from "./UserModal/UserModal";
 import Button from "react-bootstrap/Button";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   buscarUsuarios,
   buscarDetalheUsuario,
@@ -27,6 +29,9 @@ class Users extends React.Component {
 
   componentDidMount() {
     this.carregarUsuarios();
+    if (this.state.users.length === 0) {
+      toast.info("Nenhum usuário cadastrado.");
+    }
   }
 
   carregarUsuarios = async () => {
@@ -50,8 +55,9 @@ class Users extends React.Component {
     const resposta = await cadastrarUsuario(user);
     if (resposta.ok) {
       this.carregarUsuarios();
+      toast.success("Usuário cadastrado com sucesso!");
     } else {
-      alert("Não foi possível cadastrar o usuário");
+      toast.error("Não foi possível cadastrar o usuário");
     }
   };
 
@@ -59,8 +65,9 @@ class Users extends React.Component {
     const resposta = await atualizarUsuario(user);
     if (resposta.ok) {
       this.carregarUsuarios();
+      toast.success("Usuário atualizado com sucesso!");
     } else {
-      alert("Não foi possível atualizar o usuário");
+      toast.error("Não foi possível atualizar o usuário");
     }
   };
 
@@ -68,8 +75,9 @@ class Users extends React.Component {
     const resposta = await deletarUsuario(id);
     if (resposta.ok) {
       this.carregarUsuarios();
+      toast.success("Usuário excluído com sucesso!");
     } else {
-      alert("Não foi possível excluir o usuário");
+      toast.error("Não foi possível excluir o usuário");
     }
   };
 
@@ -111,7 +119,8 @@ class Users extends React.Component {
         <Button variant="success" onClick={this.abrirModalNovo}>
           Cadastrar Usuário
         </Button>
-        <UserTable className="table-container"
+        <UserTable
+          className="table-container"
           users={this.state.users}
           buscarDetalheUsuario={this.handleBuscarDetalheUsuario}
           deletarUsuario={this.handleDeletarUsuario}
@@ -125,9 +134,12 @@ class Users extends React.Component {
           dtNascimento={this.state.dtNascimento}
           atualizarStateNome={(e) => this.setState({ nome: e.target.value })}
           atualizarStateEmail={(e) => this.setState({ email: e.target.value })}
-          atualizarStateData={(e) => this.setState({ dtNascimento: e.target.value })}
+          atualizarStateData={(e) =>
+            this.setState({ dtNascimento: e.target.value })
+          }
           submeterCadastroUsuario={this.submeterCadastroUsuario}
         />
+        <ToastContainer />
       </div>
     );
   }
