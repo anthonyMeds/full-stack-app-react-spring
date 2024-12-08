@@ -9,6 +9,7 @@ import com.users.userManagement.domain.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -39,5 +40,19 @@ public class PessoaService {
                 .orElseThrow(() -> new ServiceException("Pessoa não encontrada"));
 
         return new DetalhePessoaResponseDTO(pessoa.getIdPessoa(), pessoa.getNome(), pessoa.getEmail(), pessoa.getDtNascimento());
+    }
+
+    public List<DetalhePessoaResponseDTO> buscarUsuarios() {
+
+        List<Pessoa> pessoasList = pessoaRepository.findAll();
+
+        return pessoasList.stream()
+                .map(pessoa ->
+                        new DetalhePessoaResponseDTO(
+                                pessoa.getIdPessoa(),
+                                pessoa.getNome(),
+                                pessoa.getEmail(),
+                                pessoa.getDtNascimento() ))
+                .collect(Collectors.toList());
     }
 }

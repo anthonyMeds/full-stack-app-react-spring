@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/pessoa")
 public class PessoaController {
@@ -29,9 +31,15 @@ public class PessoaController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{idCurso}")
+    @GetMapping("/{idUsuario}")
     public ResponseEntity<DetalhePessoaResponseDTO> buscarDetalheUsuario(@PathVariable @NotNull Integer idUsuario) throws ServiceException {
         DetalhePessoaResponseDTO response = pessoaService.buscarDetalheUsuario(idUsuario);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<DetalhePessoaResponseDTO>> buscarUsuarios() throws ServiceException {
+        List<DetalhePessoaResponseDTO> response = pessoaService.buscarUsuarios();
         return ResponseEntity.ok(response);
     }
 
