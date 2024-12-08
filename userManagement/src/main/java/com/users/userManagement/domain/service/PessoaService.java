@@ -72,4 +72,15 @@ public class PessoaService {
 
         return new PessoaResponseDTO(pessoa.getIdPessoa(), "Atualização realizada com sucesso.");
     }
+
+    public PessoaResponseDTO deletarUsuario(Integer id) throws ServiceException {
+
+        if (pessoaRepository.findById(id).isEmpty()) {
+            throw new ServiceException("Usuário não cadastrado.");
+        }
+
+        pessoaRepository.deleteById(id);
+
+        return new PessoaResponseDTO(id, "Usuário deletado com sucesso.");
+    }
 }

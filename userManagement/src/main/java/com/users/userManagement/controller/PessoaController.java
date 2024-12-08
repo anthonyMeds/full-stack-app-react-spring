@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,16 +32,22 @@ public class PessoaController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{idUsuario}")
+    @PostMapping("/{id}")
     public ResponseEntity<PessoaResponseDTO> atualizarUsuario(@Valid @RequestBody PessoaRequestDTO pessoaRequestDTO,
-                                                              @PathVariable @NotNull Integer idUsuario) throws ServiceException {
-        PessoaResponseDTO response = pessoaService.atualizarUsuario(pessoaRequestDTO, idUsuario);
+                                                              @PathVariable @NotNull Integer id) throws ServiceException {
+        PessoaResponseDTO response = pessoaService.atualizarUsuario(pessoaRequestDTO, id);
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/{idUsuario}")
-    public ResponseEntity<DetalhePessoaResponseDTO> buscarDetalheUsuario(@PathVariable @NotNull Integer idUsuario) throws ServiceException {
-        DetalhePessoaResponseDTO response = pessoaService.buscarDetalheUsuario(idUsuario);
+    @GetMapping("/{id}")
+    public ResponseEntity<DetalhePessoaResponseDTO> buscarDetalheUsuario(@PathVariable @NotNull Integer id) throws ServiceException {
+        DetalhePessoaResponseDTO response = pessoaService.buscarDetalheUsuario(id);
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<PessoaResponseDTO> deletarUsuario(@PathVariable @NotNull Integer id) throws ServiceException {
+        PessoaResponseDTO response = pessoaService.deletarUsuario(id);
         return ResponseEntity.ok(response);
     }
 
