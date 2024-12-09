@@ -54,10 +54,12 @@ Este é um projeto Full Stack de CRUD usando **Java Spring Boot** no backend, **
 
 #### Aguarde a configuração do container (a primeira inicialização pode demorar)
 - Cheque no doker desktop se os containers foram inicializado
-    ![docker](documentacao\docker-container.png)
+
+![docker](./documentacao/docker-container.png)
 
 - Ou verifique via terminal 
-![docker-sucesso](documentacao/docker-sucesso-teminal.png)
+
+![docker-sucesso](./documentacao//docker-sucesso-teminal.png)
 
 
 6. Acessar a aplicação:
