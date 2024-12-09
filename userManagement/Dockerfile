@@ -1,10 +1,10 @@
-
-FROM openjdk:21-jdk-slim
+# Use the OpenJDK 17 slim base image
+FROM openjdk:17-jdk-slim
 
 WORKDIR /app
 
-COPY target/your-springboot-app.jar app.jar
+COPY target/userManagement-0.0.1-SNAPSHOT.jar app.jar
 
-EXPOSE 8083
+EXPOSE 8093
 
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
