@@ -1,10 +1,10 @@
-# Use the OpenJDK 17 slim base image
-FROM openjdk:17-jdk-slim
+# Arquitetura arm e amd
+FROM eclipse-temurin:17.0.8.1_1-jdk-jammy
 
-WORKDIR /app
+RUN apt-get update && apt-get install -y maven
 
-COPY target/userManagement-0.0.1-SNAPSHOT.jar app.jar
+COPY . .
 
-EXPOSE 8093
+RUN mvn clean install -DskipTests
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "target/userManagement-0.0.1-SNAPSHOT.jar"]
