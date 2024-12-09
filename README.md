@@ -41,8 +41,9 @@ Este é um projeto Full Stack de CRUD usando **Java Spring Boot** no backend, **
     ```bash
     cd full-stack-app-react-spring
 
-4. - Subir a aplicação por meio do arquivo start:
+4. - Subir a aplicação por meio do arquivo start **(Obs: Irá remover containers, imagens e volumes não utilizados**, caso prefira, realize o passo 5 no lugar do arquivo start):
     ```bash
+    #OBS: irá remover containers, volumes e imagens não utilizadas para evitar conflitos
     #No linux executar 
     start.sh
     #No windows executar 
