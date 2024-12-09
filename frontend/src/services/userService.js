@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080/pessoa";
+const API_URL = "https://spring-app-tmdu.onrender.com/pessoa";
 
 export const buscarUsuarios = async () => {
   const resposta = await fetch(API_URL);
