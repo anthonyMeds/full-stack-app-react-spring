@@ -54,7 +54,7 @@ Este é um projeto Full Stack de CRUD usando **Java Spring Boot** no backend, **
     docker-compose up --build
 
 #### Aguarde a configuração do container (a primeira inicialização pode demorar)
-- Cheque no doker desktop se os containers foram inicializado
+- Cheque no docker desktop se os containers foram inicializados
 
 ![docker](./documentacao/docker-container.png)
 
